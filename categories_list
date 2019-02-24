@@ -1,0 +1,24 @@
+
+if ( ! function_exists( 'my_news_getcat' ) ) {
+    function my_news_getcat(){
+        $categories_obj = get_categories();
+        $cats = array();
+        $cats['All'] = '0';
+        foreach ($categories_obj as $cat) {
+            $cats[$cat->cat_name] = $cat->term_id;
+        }
+        return $cats;
+    }
+}
+
+if ( ! function_exists( 'my_news_get_category_id_from_slug' ) ) {
+    function my_news_get_category_id_from_slug($cat_ids) {
+        foreach( $cat_ids as $cat ) :
+            $top_news_term = get_category_by_slug($cat);
+            $getcatid[] = esc_attr($top_news_term->term_id);
+            $getcatids = implode(",", array_filter($getcatid));
+            $getcatids1 = rtrim($getcatids,',');
+        endforeach;
+        return $getcatids1;
+    }
+}
